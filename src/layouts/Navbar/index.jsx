@@ -2,8 +2,8 @@ import React from 'react'
 
 const NavBar = () => {
   return (
-    <div>index</div>
+    <div>NavBar</div>
   )
 }
 
-export default index
+export default NavBar
