@@ -11,6 +11,27 @@ export const registerUser = createAsyncThunk(
             )
             return response.data;
         } catch(error) {
+            console.log(error);
+            if(error.response) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
+export const loginUser = createAsyncThunk(
+    "user/loginUser",
+    async(body,thunkAPI) => {
+        try {
+            const response = await axiosInstance.post(
+                `/users/login`,
+                body
+            )
+            return response.data;
+        } catch(error) {
+            console.log(error);
             if(error.response) {
                 return thunkAPI.rejectWithValue(error.response.data);
             } else {
