@@ -7,6 +7,8 @@ import NavBar from './layout/Navbar'
 import Footer from './layout/Footer'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { authUser } from './store/thunkFunctions'
 
 function Layout() {
   return (
@@ -22,6 +24,15 @@ function Layout() {
 }
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(state => state.user?.isAuth)
+  const {pathname} = useLocation()
+
+  useEffect(() => {
+    if(isAuth) {
+      dispatch(authUser());
+    }
+  }, [isAuth, pathname])
 
   return (
     <>
