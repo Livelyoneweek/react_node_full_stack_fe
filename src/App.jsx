@@ -13,6 +13,10 @@ import { useEffect } from 'react'
 import ProtectedPage from './pages/ProtectedPage'
 import ProtectedRoutes from './conponents/ProtectedRoutes'
 import NotAuthRoutes from './conponents/NotAuthRoutes'
+import UploadProductPage from './pages/UploadProductPage'
+import DetailProductPage from './pages/DetailProductPage'
+import CartPage from './pages/CartPage'
+import HistoryPage from './pages/HistoryPage'
 
 function Layout() {
   return (
@@ -47,6 +51,10 @@ function App() {
           {/* 로그인한 사람만 갈 수 있는 경로 */}
           <Route element={<ProtectedRoutes isAuth={isAuth} />}>
             <Route path='/protected' element={<ProtectedPage />} />
+            <Route path='/product/upload' element={<UploadProductPage />} />
+            <Route path='/product/:productId' element={<DetailProductPage />} />
+            <Route path='/user/cart' element={<CartPage />} />
+            <Route path='/histroy' element={<HistoryPage />} />
           </Route>
 
           {/* 로그인한 사람은 갈 수 없는 경로 */}

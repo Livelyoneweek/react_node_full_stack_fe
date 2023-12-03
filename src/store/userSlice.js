@@ -3,8 +3,8 @@ import { authUser, loginUser, logoutUser, registerUser } from "./thunkFunctions"
 import { toast } from "react-toastify";
 
 const initialState = {
-    useData: {
-        id: '',
+    userData: {
+        _id: '',
         email: '',
         name: '',
         role: 0,
@@ -39,7 +39,7 @@ const userSlice = createSlice({
             })
             .addCase(loginUser.fulfilled,(state,action) => {
                 state.isLoading = false;
-                state.useData = action.payload;
+                state.userData = action.payload;
                 state.isAuth = true;
                 localStorage.setItem('accessToken', action.payload.accessToken);
             })
@@ -54,7 +54,7 @@ const userSlice = createSlice({
             })
             .addCase(authUser.fulfilled,(state,action) => {
                 state.isLoading = false;
-                state.useData = action.payload;
+                state.userData = action.payload;
                 state.isAuth = true;
             })
             .addCase(authUser.rejected,(state,action) => {
@@ -69,7 +69,7 @@ const userSlice = createSlice({
             })
             .addCase(logoutUser.fulfilled,(state) => {
                 state.isLoading = false;
-                state.useData = initialState.useData;
+                state.userData = initialState.userData;
                 state.isAuth = false;
                 localStorage.removeItem('accessToken');
             })
