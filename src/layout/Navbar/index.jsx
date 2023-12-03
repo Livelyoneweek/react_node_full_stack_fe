@@ -31,7 +31,7 @@ const NavBar = () => {
 
         {/* mobile nav-items */}
         <div className="block sm:hidden">
-          {menu && <NavItem mobile />}
+          {menu && <NavItem mobile={true} />}
         </div>
       </div>
     </nav>
