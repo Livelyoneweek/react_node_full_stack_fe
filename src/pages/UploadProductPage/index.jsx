@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import axiosInstance from "../../utils/axios"
 import { useNavigate } from "react-router-dom"
+import FileUpload from "../../conponents/FileUpload"
 
 const continents = [
     {key:1, value:'Africa'},
@@ -34,6 +35,14 @@ const UploadProductPage = () => {
         }))
     }
 
+
+    const handleImages =(newImages) => {
+        setProduct((preState) => ({
+            ...preState,
+            images : newImages
+        }))
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const body = {
@@ -59,6 +68,9 @@ const UploadProductPage = () => {
             </div>
 
             <form className="mt-6" onSubmit={handleSubmit}>
+
+                <FileUpload images={product.images} onImageChange={handleImages} />
+                
                 <div className="mt-4">
                     <label htmlFor="title">이름</label>
                     <input className="w-full px-4 py-2 bg-white border rounded-md"
