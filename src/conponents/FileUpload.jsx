@@ -1,7 +1,8 @@
 import Dropzone from 'react-dropzone'
 import axiosInstance from '../utils/axios';
+import PropTypes from 'prop-types';
 
-const FileUpload = ( onImageChange, images ) => {
+const FileUpload = ( {onImageChange, images} ) => {
 
   const handleDrop = async (files) => {
     let formData = new FormData();
@@ -20,6 +21,13 @@ const FileUpload = ( onImageChange, images ) => {
     }
   }
 
+  const handleDelete = (image) => {
+    const currentIndex = images.indexOf(image);
+    let newImages = [...images];
+    newImages.splice(currentIndex, 1);
+    onImageChange(newImages)
+  }
+
   return (
     <div className='flex gap-4 '>
       <Dropzone onDrop={handleDrop}>
@@ -34,18 +42,23 @@ const FileUpload = ( onImageChange, images ) => {
 
       </Dropzone>
       <div className='flex-grow h-[300px] border flex items-center justify-center overflow-x-scroll overflow-y-hidden'>
-          {images.map(image => {
-            <div key={image}>
+          {images.map(image => (
+            <div key={image} onClick={ () => handleDelete(image)}>
               <img 
                 className='min-w-[300px] h-[300px]'
                 src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
                 alt={image}
               />
             </div>
-          })}
+          ))}
       </div>
     </div>
   )
 }
+
+FileUpload.propTypes = {
+  onImageChange: PropTypes.func.isRequired,
+  images: PropTypes.array.isRequired
+};
 
 export default FileUpload
