@@ -17,6 +17,11 @@ const LandingPage = () => {
     price:[]
   })
 
+  console.log(setSkip)
+  console.log(setHasMore)
+  console.log(filters)
+  console.log(setFilters)
+
   useEffect(() => {
     fetchProducts({ skip, limit });
   }, [])
@@ -28,6 +33,7 @@ const LandingPage = () => {
       filters,
       searchTerm
     }
+    loadMore
 
     try {
       const response = await axiosInstance.get('/products', { params })
@@ -60,7 +66,7 @@ const LandingPage = () => {
       </div>
 
       {/* Card */}
-      <div className="grid grid-clos-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {products.map(product =>
           <CardItem product={product} key={product._id} />
         )}
