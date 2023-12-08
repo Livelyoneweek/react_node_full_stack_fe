@@ -33,7 +33,7 @@ const LandingPage = () => {
 
     try {
       const response = await axiosInstance.get('/products', { params })
-
+      console.log(response)
       if(loadMore) {
         setProducts([...products, ...response.data.products])
       } else {
@@ -56,6 +56,24 @@ const LandingPage = () => {
     setSkip(skip+limit);
   }
 
+  const handleFilters = (newFilterData, category) => {
+    const newFilters = {...filters};
+    newFilters[category] = newFilterData;
+
+    showFilteredResults(newFilters);
+    setFilters(newFilters);
+  }
+
+  const showFilteredResults = (filters) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters
+    }
+    fetchProducts(body);
+    setSkip(0);
+  }
+
   return (
     <section>
       <div className="text-center m-7">
@@ -65,7 +83,9 @@ const LandingPage = () => {
       {/* 필터 */}
       <div className="flex gap-3">
         <div className="w-1/2">
-          <CheckBox />
+          <CheckBox continents={continents} checkedContinents={filters.continents} 
+            onFilters = {filters => handleFilters(filters, "continents")}
+          />
         </div>
 
         <div className="w-1/2">
