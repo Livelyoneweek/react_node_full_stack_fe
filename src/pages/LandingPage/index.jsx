@@ -4,6 +4,7 @@ import CheckBox from "./Sections/CheckBox"
 import RadioBox from "./Sections/RadioBox"
 import SearchInput from "./Sections/SearchInput"
 import axiosInstance from "../../utils/axios"
+import { continents } from '../../utils/filterData'
 
 
 const LandingPage = () => {
@@ -16,12 +17,6 @@ const LandingPage = () => {
     continents: [],
     price:[]
   })
-
-  console.log(setFilters)
-
-  useEffect(() => {
-    fetchProducts({ skip, limit });
-  }, [])
 
   const fetchProducts = async ({skip, limit, loadMore = false, filters= {}, searchTerm =""}) => {
     const params = {
@@ -44,6 +39,10 @@ const LandingPage = () => {
       console.error(error)
     }
   }
+
+  useEffect(() => {
+    fetchProducts({ skip, limit });
+  }, [])
 
   const handleLoadMore = () => {
     const body = {
