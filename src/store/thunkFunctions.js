@@ -11,7 +11,7 @@ export const registerUser = createAsyncThunk(
             )
             return response.data;
         } catch(error) {
-            console.log(error);
+            console.error(error);
             if(error.response) {
                 return thunkAPI.rejectWithValue(error.response.data);
             } else {
@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk(
             )
             return response.data;
         } catch(error) {
-            console.log(error);
+            console.error(error);
             if(error.response) {
                 return thunkAPI.rejectWithValue(error.response.data);
             } else {
@@ -50,7 +50,7 @@ export const authUser = createAsyncThunk(
             )
             return response.data;
         } catch(error) {
-            console.log(error);
+            console.error(error);
             if(error.response) {
                 return thunkAPI.rejectWithValue(error.response.data);
             } else {
@@ -69,7 +69,27 @@ export const logoutUser = createAsyncThunk(
             )
             return response.data;
         } catch(error) {
-            console.log(error);
+            console.error(error);
+            if(error.response) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+        }
+    }
+)
+
+export const addToCart = createAsyncThunk(
+    "user/addToCart",
+    async(body,thunkAPI) => {
+        try {
+            const response = await axiosInstance.post(
+                `/users/cart`,
+                body
+            )
+            return response.data;
+        } catch(error) {
+            console.error(error);
             if(error.response) {
                 return thunkAPI.rejectWithValue(error.response.data);
             } else {
