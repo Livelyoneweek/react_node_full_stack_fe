@@ -98,3 +98,29 @@ export const addToCart = createAsyncThunk(
         }
     }
 )
+
+export const getCartItems = createAsyncThunk(
+    "user/getCartItems",
+    async({cartItemIds, userCart},thunkAPI) => {
+        try {
+            const response = await axiosInstance.get(`/products/${cartItemIds}?type=array`);
+            console.log("tt ",response.data);
+            userCart.forEach(cartItem => {
+                response.data.forEach((productDetail, index) => {
+                    if(cartItem.id === productDetail._id) {
+                        response.data[index].quantity = cartItem.quantity;
+                    }
+                })
+            })
+
+            return response.data;
+        } catch(error) {
+            console.error(error);
+            if(error.response) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+        }
+    }
+)
