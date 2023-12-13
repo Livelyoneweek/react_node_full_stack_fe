@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "../../store/thunkFunctions";
+import { getCartItems, removeCartItem } from "../../store/thunkFunctions";
 import CartTable from "./Sections/CartTable";
 
 const CartPage = () => {
@@ -9,6 +9,7 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
 
+  // state에 cartDetail 넣어주는 함수 실행
   useEffect(() => {
     let cartItemIds = [];
 
@@ -38,7 +39,9 @@ const CartPage = () => {
   };
   ////////////////////////////////////////////////////////////
 
-  const handleRemoveCartItem = () => {};
+  const handleRemoveCartItem = (productId) => {
+    dispatch(removeCartItem(productId));
+  };
 
   return (
     <section>

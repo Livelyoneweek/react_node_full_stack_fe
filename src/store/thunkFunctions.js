@@ -114,3 +114,33 @@ export const getCartItems = createAsyncThunk(
     }
   }
 );
+
+// store 에 cartDetail에 아이템 일부 삭제하는 함수
+export const removeCartItem = createAsyncThunk(
+  "user/removeCartItem",
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/users/cart?productId=${productId}`
+      );
+      console.log("getCartItems : ", response.data);
+
+      response.data.cart.forEach((cartItem) => {
+        response.data.productInfo.forEach((productDetail, index) => {
+          if (cartItem.id === productDetail._id) {
+            response.data.productInfo[index].quantity = cartItem.quantity;
+          }
+        });
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      } else {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+    }
+  }
+);
