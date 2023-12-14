@@ -144,3 +144,24 @@ export const removeCartItem = createAsyncThunk(
     }
   }
 );
+
+export const payProducts = createAsyncThunk(
+  "user/payProducts",
+  async (body, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        `/users/payment`,
+        body
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      } else {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+    }
+  }
+);
